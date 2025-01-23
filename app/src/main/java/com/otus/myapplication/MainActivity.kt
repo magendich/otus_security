@@ -33,6 +33,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        java.security.Security.getProviders()
+
         val secure = Security()
         val keys = Keys(applicationContext)
         val masterKey = keys.getMasterKey(MasterKey.KeyScheme.AES256_GCM)
