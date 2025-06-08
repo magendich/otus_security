@@ -168,4 +168,61 @@
         app:barrierDirection="bottom"
         app:constraint_referenced_ids="biometry_section,strong_biometry_button,weak_biometry_button" />
 
+    <TextView
+        android:id="@+id/login_section"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Login section"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/biometry"
+        style="@style/TextAppearance.MaterialComponents.Headline6" />
+
+    <EditText
+        android:id="@+id/email_edit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Email"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_section" />
+
+    <EditText
+        android:id="@+id/password_edit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Password"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/email_edit" />
+
+    <Button
+        android:id="@+id/login_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Login"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/password_edit" />
+
+    <TextView
+        android:id="@+id/token_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Token: "
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_button" />
+
+    <Switch
+        android:id="@+id/biometry_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enable Biometry Login"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/token_text"
+        tools:ignore="UseSwitchCompatOrMaterialXml" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

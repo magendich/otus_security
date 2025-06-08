@@ -31,4 +31,23 @@ class PreferencesUtils(
     fun get(key: String): String {
         return sharedPreferences.getString(key, "").orEmpty()
     }
+
+    fun setAuthToken(token: String, key: javax.crypto.SecretKey) {
+        val encrypted = com.otus.myapplication.crypto.Security().encryptAes(token, key)
+        set("auth_token", encrypted)
+    }
+
+    fun getAuthToken(key: javax.crypto.SecretKey): String? {
+        val encrypted = get("auth_token")
+        if (encrypted.isEmpty()) return null
+        return com.otus.myapplication.crypto.Security().decryptAes(encrypted, key)
+    }
+
+    fun setBiometryEnabled(enabled: Boolean) {
+        set("biometry_enabled", enabled.toString())
+    }
+
+    fun isBiometryEnabled(): Boolean {
+        return get("biometry_enabled") == "true"
+    }
 }

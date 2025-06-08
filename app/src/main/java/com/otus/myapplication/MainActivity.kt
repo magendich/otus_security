@@ -126,5 +126,58 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "Biometry not supported", Toast.LENGTH_LONG).show()
             }
         }
+
+
+        binding.loginButton.setOnClickListener {
+            val email = binding.emailEdit.text.toString()
+            val password = binding.passwordEdit.text.toString()
+
+            if (email == "otus@test.com" && password == "otus") {
+                val fakeToken = "otus_auth_token_123456"
+                preferences.setAuthToken(fakeToken, key)
+                binding.tokenText.text = "Token: $fakeToken (saved encrypted)"
+                Toast.makeText(this, "Login success! Token saved", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "Invalid credentials", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+
+        val savedToken = preferences.getAuthToken(key)
+        if (!savedToken.isNullOrEmpty()) {
+            binding.tokenText.text = "Token: $savedToken (decrypted)"
+        }
+
+
+        binding.biometrySwitch.isChecked = preferences.isBiometryEnabled()
+        binding.biometrySwitch.setOnCheckedChangeListener { _, isChecked ->
+            preferences.setBiometryEnabled(isChecked)
+            Toast.makeText(this, "Biometry login is ${if (isChecked) "enabled" else "disabled"}", Toast.LENGTH_SHORT).show()
+        }
+
+
+        if (preferences.isBiometryEnabled()) {
+            val canAuth = BiometricManager.from(this).canAuthenticate(BIOMETRIC_STRONG or BIOMETRIC_WEAK) == BIOMETRIC_SUCCESS
+            if (canAuth) {
+                val authPrompt = Class3BiometricAuthPrompt.Builder("Biometric login", "Cancel").apply {
+                    setSubtitle("Authenticate to access token")
+                    setDescription("Biometric login required")
+                    setConfirmationRequired(true)
+                }.build()
+                lifecycleScope.launch {
+                    try {
+                        authPrompt.authenticate(
+                            AuthPromptHost(this@MainActivity), null)
+
+                        val token = preferences.getAuthToken(key)
+                        if (!token.isNullOrEmpty()) {
+                            binding.tokenText.text = "Token: $token (decrypted)"
+                        }
+                    } catch (e: Exception) {
+                        Toast.makeText(this@MainActivity, "Biometry failed: ${e.message}", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
     }
 }
