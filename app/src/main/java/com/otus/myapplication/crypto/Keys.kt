@@ -27,7 +27,7 @@ private const val KEY_LENGTH = 256
 
 private const val RSA_ALGORITHM = "RSA"
 private const val RSA_KEY_ALIAS = "RSA_OTUS_DEMO"
-private const val RSA_MODE_LESS_THAN_M = "RSA/ECB/PKCS1Padding"
+private const val RSA_MODE_LESS_THAN_M = "RSA/ECB/OAEPPadding"
 private const val SHARED_PREFERENCE_NAME = "RSAEncryptedKeysSharedPreferences"
 private const val ENCRYPTED_KEY_NAME = "RSAEncryptedKeysKeyName"
 
@@ -151,7 +151,7 @@ class Keys(
                 KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT
             )
                 .setBlockModes(KeyProperties.BLOCK_MODE_ECB)
-                .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_RSA_PKCS1)
+                .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_RSA_OAEP)
                 .setUserAuthenticationRequired(true)
                 .setRandomizedEncryptionRequired(false)
                 .build()

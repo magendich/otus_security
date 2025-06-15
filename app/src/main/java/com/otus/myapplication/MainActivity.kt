@@ -166,8 +166,7 @@ class MainActivity : AppCompatActivity() {
                 }.build()
                 lifecycleScope.launch {
                     try {
-                        authPrompt.authenticate(
-                            AuthPromptHost(this@MainActivity), null)
+                        authPrompt.authenticate(AuthPromptHost(this@MainActivity), null)
 
                         val token = preferences.getAuthToken(key)
                         if (!token.isNullOrEmpty()) {
